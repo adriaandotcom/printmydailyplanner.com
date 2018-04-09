@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Daily Planner</title>
+  <meta name="description" content="Daily planner done right. I tested many ways and tools to be productive. This is a product which really works for me. Give it a try.">
+  <meta name="author" content="Adriaan van Rossum">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="intro">
+  <ol>
+    <li>Fill in the planner as much a possible</li>
+    <li><a class="print">Print</a> the planner (if you prefer)</li>
+    <li>Use it for the day and check regularly</li>
+    <li>Let me know how to improve this tool on <a href="https://twitter.com/intent/tweet?text=Hey%20@harianus%20I%27m%20using%20your%20website%20https://printmydailyplanner.com%20and%20I%20have%20a%20suggestion:%20" target="_blank">Twitter</a></li>
+  </ol>
+  <div>
+    <button class="print">Print planner</button>
+    <button class="clear">Clear planner</button>
+  </div>
+</header>
+
+<div class="page">
+  <div class="column left">
+    <div class="header">
+      <h1><span contenteditable="true">Adriaan</span>'s daily planner</h1>
+      <h2>Today is <span class="today" contenteditable="true"></span></h2>
+    </div>
+    <ul class="calendar">
+      <li>
+        <span>9:00</span>
+      </li>
+      <li>
+        <span>10:00</span>
+      </li>
+      <li>
+        <span>11:00</span>
+      </li>
+      <li>
+        <span>12:00</span>
+      </li>
+      <li>
+        <span>13:00</span>
+      </li>
+      <li>
+        <span>14:00</span>
+      </li>
+      <li>
+        <span>15:00</span>
+      </li>
+      <li>
+        <span>16:00</span>
+      </li>
+      <li>
+        <span>17:00</span>
+      </li>
+      <li>
+        <span>18:00</span>
+      </li>
+      <li>
+        <span>19:00</span>
+      </li>
+      <li>
+        <span>20:00</span>
+      </li>
+      <li>
+        <span>21:00</span>
+      </li>
+      <li>
+        <span>22:00</span>
+      </li>
+      <li>
+        <span>23:00</span>
+      </li>
+      <li>
+        <span>0:00</span>
+      </li>
+    </ul>
+  </div>
+  <div class="column right">
+    <h1>Notes</h1>
+    <h2>3 things you really need to do</h2>
+    <ul class="check-list">
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+    </ul>
+    <h2>People to contact today</h2>
+    <ul class="check-list">
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+    </ul>
+    <h2>Don't forget</h2>
+    <ul class="check-list">
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+    </ul>
+    <h2>What are you proud of this day?</h2>
+    <ul class="list">
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+    </ul>
+    <h2>What could be better next day?</h2>
+    <ul class="list">
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+      <li><p contenteditable="true"></p></li>
+    </ul>
+  </div>
+</div>
+
+<footer><p>Created for you by <a href="https://adriaan.io/?utm_source=printmydailyplanner.com" target="_blank">Adriaan van Rossum</a>, suggest an improvement on <a href="https://twitter.com/intent/tweet?text=Hey%20@harianus%20I%27m%20using%20your%20website%20https://printmydailyplanner.com%20and%20I%20have%20a%20suggestion:%20" target="_blank">Twitter</a></p></footer>
+
+<script>
+function setDate() {
+  const locale = 'en-US'
+  const date = new Intl.DateTimeFormat(locale, { weekday: "long", month: "long", year: "numeric", day: "numeric" }).format()
+  document.querySelector('.today').innerHTML = date
+}
+
+const prints = document.querySelectorAll('.print')
+for (let i = 0; i < prints.length; i++) {
+  prints[i].addEventListener('click', function() {
+    window.print()
+  })
+}
+
+document.querySelector('.clear').addEventListener('click', function() {
+  if (window.confirm('Do you really want to clear the daily planner?')) {
+    const inputs = document.querySelectorAll('p[contenteditable]')
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].innerHTML = ''
+    }
+    setDate()
+  }
+})
+
+setDate()
+</script>
+
+</body>
+</html>
