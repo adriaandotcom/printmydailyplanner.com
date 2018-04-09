@@ -96,6 +96,10 @@ h1, h2, h3, p {
   font-weight: normal;
 }
 
+h1, h2, h3 {
+  font-family: 'Quicksand', sans-serif;
+}
+
 h1 {
   font-size: 30px;
   color: #666;
@@ -128,12 +132,13 @@ h2 {
   display: flex;
   flex: 1 0 auto;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 7px);
   border: 1px solid #666;
   border-radius: 5px;
   margin: 10px 0;
   padding: 0;
   list-style-type: none;
+  margin-left: 7px;
 }
 
 .calendar > li {
@@ -162,7 +167,7 @@ h2 {
   border-radius: 3px;
   position: absolute;
   top: -9px;
-  left: 7px;
+  left: -8px;
   padding: 2px 4px;
 }
 
