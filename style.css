@@ -1,5 +1,6 @@
 @page {
   size: A4;
+  margin: 5mm 3mm;
 }
 
 html, body {
@@ -12,12 +13,20 @@ html, body {
 body {
   display: flex;
   align-items: center;
-  font-family: Helvetica;
+  font-family: "Kohinoor Bangla", Arial, sans-serif;
   flex-direction: column;
   color: #666;
-  background-image: linear-gradient(to right bottom, #4ca1af, #c4e0e5);
+  background-image: linear-gradient(to right bottom, #6b12e0, #2dbcf3);
   background-attachment: fixed;
 }
+
+@media print {
+  body {
+    background: none;
+    filter: grayscale(100%);
+  }
+}
+
 
 a, button {
   cursor: pointer;
@@ -40,7 +49,7 @@ footer a {
 }
 
 @media print {
-  .intro {
+  .hide-on-print {
     display: none;
   }
 }
@@ -67,7 +76,7 @@ footer a {
   width: 800px;
   max-width: 95%;
   border-radius: 3px;
-  box-shadow: 1px 1px 1px 1px #bbb;
+  box-shadow: 1px 1px 13px 1px #8b6ab5;
   margin-bottom: 20px;
 }
 
@@ -83,7 +92,8 @@ footer a {
 .column {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 0 calc(50% - 30px);
+  min-width: 0;
   margin: 15px;
 }
 
@@ -97,21 +107,31 @@ h1, h2, h3, p {
 }
 
 h1, h2, h3 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Kohinoor Bangla", Arial, sans-serif;
+  font-weight: 200;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #6b12e0;
 }
 
 h1 {
   font-size: 30px;
-  color: #666;
+  margin: 0 0 5px;
 }
 
 h2 {
   font-size: 16px;
-  color: #aaa;
+  color: #8d4de0;
 }
 
 [contenteditable] * {
   display: inline;
+}
+
+span[contenteditable] {
+  display: inline-block;
+  min-width: 50px;
 }
 
 [contenteditable] br {
@@ -120,6 +140,12 @@ h2 {
 
 [contenteditable]:hover {
   cursor: pointer;
+}
+
+[contenteditable]:focus, [contenteditable]:hover {
+  outline: 0 solid transparent;
+  background-color: #eee;
+  border-radius: 3px;
 }
 
 @media print {
@@ -133,12 +159,14 @@ h2 {
   flex: 1 0 auto;
   flex-direction: column;
   width: calc(100% - 7px);
-  border: 1px solid #666;
+  border: 1px solid #ccc; // 6b12e0
   border-radius: 5px;
   margin: 10px 0;
   padding: 0;
   list-style-type: none;
   margin-left: 7px;
+  user-select: none;
+  position: relative;
 }
 
 .calendar > li {
@@ -155,11 +183,65 @@ h2 {
   border-top: 1px solid #ddd;
 }
 
+.calendar > li.event {
+  position: absolute;
+  left: -1px;
+  width: calc(100% - 40px);
+  border-radius: 3px;
+  background-image: linear-gradient(to right bottom, #6b12e0, #506aea);
+  z-index: 500;
+  border: 1px solid #bbb;
+  color: white;
+  transition: width 100ms ease-in;
+  overflow: hidden;
+}
+
+.calendar > li.event h3 {
+  color: white;
+  font-size: 15px;
+  margin: 2px 0 0 33px;
+}
+
+.calendar > li.event p {
+  margin: 0 0 0 33px;
+  font-size: 12px;
+}
+
+.calendar > li.event::before {
+  border: none;
+}
+
+.calendar > li.event:hover::before {
+  content: '';
+  position: absolute;
+  top: calc(100% - 10px);
+  left: calc(50% - 15px / 2);
+  width: 15px;
+  height: 2px;
+  border-bottom: 2px solid white;
+  border-radius: 1px;
+  color: white;
+  border-top: 2px solid white;
+  cursor: ns-resize;
+}
+
+@media print {
+  .calendar > li.event h3,
+  .calendar > li.event p {
+    color: black;
+  }
+  .calendar > li.event {
+    background: #ccc;
+    box-shadow: none;
+  }
+}
+
 .calendar > li + li {
   border-top: 1px solid #bbb;
 }
 
 .calendar > li > span {
+  z-index: 1000;
   display: inline-block;
   font-size: 10px;
   background-color: white;
@@ -176,6 +258,10 @@ h2 {
   border: none;
 }
 
+.calendar > li:last-of-type::before {
+  border-top: none;
+}
+
 .check-list {
   margin: 0;
   padding: 0;
@@ -187,15 +273,6 @@ h2 {
   display: flex;
   align-items: center;
   min-height: 40px;
-}
-
-.check-list > li::before {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border: 1px solid #666;
-  border-radius: 5px;
-  margin-right: 10px;
 }
 
 .check-list > li > p {
@@ -235,4 +312,87 @@ footer {
   footer {
     display: none;
   }
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+
+  color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 3px 7px;
+  transition: color 100ms ease-in, border-color 250ms ease-in;
+}
+
+.page button[disabled] {
+  color: #ba9de0;
+  border-color: #ba9de0;
+}
+
+.page button {
+  color: #6b12e0;
+  border-color: #6b12e0;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+input[type="checkbox"] + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #6b12e0;
+  border-radius: 3px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .8;
+  transition: all .12s, border-color 100ms;
+}
+
+input[type="checkbox"]:checked + label + p {
+  text-decoration: line-through;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -2px;
+  left: 5px;
+  border-radius: 0 0 4px 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
 }
