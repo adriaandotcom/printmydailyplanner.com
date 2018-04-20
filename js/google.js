@@ -9,12 +9,10 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 // included, separated by spaces.
 var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
-// var authorizeButton = document.getElementById('authorize-button');
-// var signoutButton = document.getElementById('signout-button');
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-/**
- *  On load, called to load the auth2 library and API client library.
- */
 function handleClientLoad() {
   gapi.load('client:auth2', initClient);
 }
@@ -77,7 +75,7 @@ function listUpcomingEvents() {
     if (summary.indexOf('@') > -1) summary = summary.split('@')[0];
 
     // Save the name and update the title
-    setName(summary);
+    setName(capitalizeFirstLetter(summary));
 
     for (i = 0; i < events.length; i++) {
       var event = events[i];
