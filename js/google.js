@@ -70,7 +70,15 @@ function listUpcomingEvents() {
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
-    setName(response.result.summary);
+    var summary = response.result.summary;
+
+    // Google sometimes returns an email address instead of a name, so we want to
+    // grab the part before the email: `vilie` of `vilie@example.com`
+    if (summary.indexOf('@') > -1) summary = summary.split('@')[0];
+
+    // Save the name and update the title
+    setName(summary);
+
     for (i = 0; i < events.length; i++) {
       var event = events[i];
       var whenStart = event.start.dateTime;
