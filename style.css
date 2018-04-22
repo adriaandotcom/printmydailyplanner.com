@@ -20,14 +20,6 @@ body {
   background-attachment: fixed;
 }
 
-@media print {
-  body {
-    background: none;
-    filter: grayscale(100%);
-  }
-}
-
-
 a, button {
   cursor: pointer;
 }
@@ -46,12 +38,6 @@ footer a {
   flex: 1 0 auto;
   justify-content: space-between;
   color: white;
-}
-
-@media print {
-  .hide-on-print {
-    display: none;
-  }
 }
 
 .intro button {
@@ -84,7 +70,7 @@ footer a {
   .page {
     margin: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     box-shadow: none;
   }
 }
@@ -95,6 +81,23 @@ footer a {
   flex: 1 0 calc(50% - 30px);
   min-width: 0;
   margin: 15px;
+}
+
+.column.right {
+  overflow-x: hidden;
+  justify-content: space-between;
+}
+
+.column.right section:last-of-type ul.check-list {
+  margin-bottom: -1px;
+}
+
+.column.right section:last-of-type ul.list {
+  margin-bottom: 3px;
+}
+
+.column.right section {
+  margin-bottom: 3px;
 }
 
 .header {
@@ -110,7 +113,8 @@ h1, h2, h3 {
   font-family: "Kohinoor Bangla", Arial, sans-serif;
   font-weight: 200;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: hidden;
+  flex: 0 0 auto;
   text-overflow: ellipsis;
   color: #6b12e0;
 }
@@ -395,4 +399,31 @@ input[type="checkbox"]:checked + label:before {
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(45deg);
+}
+
+@media print {
+  .hide-on-print {
+    display: none;
+  }
+
+  body {
+    background: none;
+  }
+
+  h1, h2 {
+    color: black;
+  }
+
+  input[type="checkbox"] + label:before {
+    border-color: black;
+  }
+
+  * {
+     -webkit-print-color-adjust: exact;
+     print-color-adjust: exact;
+  }
+
+  .column.right ul {
+    margin-bottom: 3px;
+  }
 }
